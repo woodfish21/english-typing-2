@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>英打遊戲版本二</title>
+  <style>
+    body {
+      background-color: #ffffff;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      margin: 0;
+      font-family: Arial, sans-serif;
+    }
+    h1 {
+      font-size: 2rem;
+      color: #333333;
+      margin-bottom: 20px;
+    }
+    .img-container {
+      margin-bottom: 20px;
+    }
+    .img-container img {
+      max-width: 100%;
+      max-height: 300px;
+      height: auto;
+      border: 1px solid #cccccc;
+      border-radius: 8px;
+    }
+    button {
+      font-size: 1.2rem;
+      padding: 10px 24px;
+      cursor: pointer;
+    }
+    .error-msg {
+      color: #d9534f;
+      font-size: 0.9rem;
+      margin-top: 10px;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>英打遊戲版本二</h1>
+
+  <div class="img-container">
+    <img src="assets/keyboard.png" alt="鍵盤圖片" id="keyboard-img">
+  </div>
+
+  <button type="button" id="start-btn">開始</button>
+  <div id="error-message" class="error-msg"></div>
+
+  <!-- 引用音效檔案 -->
+  <audio id="beep-sound" src="assets/beep.wav" preload="auto"></audio>
+
+  <script>
+    const startBtn = document.getElementById('start-btn');
+    const beepSound = document.getElementById('beep-sound');
+    const errorMsg = document.getElementById('error-message');
+    const keyboardImg = document.getElementById('keyboard-img');
+
+    // 檢查圖片載入錯誤
+    keyboardImg.onerror = function() {
+      errorMsg.textContent = '無法載入鍵盤圖片 (assets/keyboard.png)，請檢查檔案路徑。';
+    };
+
+    // 點擊開始按鈕播放音效
+    startBtn.addEventListener('click', () => {
+      errorMsg.textContent = '';
+      beepSound.currentTime = 0;
+      beepSound.play().catch(error => {
+        console.error('播放音效失敗：', error);
+        errorMsg.textContent = '無法播放聲音 (assets/beep.wav)，請檢查音效檔位置或瀏覽器權限。';
+      });
+    });
+  </script>
+
+</body>
+</html>
